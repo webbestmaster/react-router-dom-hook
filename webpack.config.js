@@ -72,13 +72,12 @@ const webpackConfigBuildLibrary = {
         'react-router-dom': {
             commonjs: 'react-router-dom',
             commonjs2: 'react-router-dom',
-            amd: 'ReactDOM',
-            root: 'ReactDOM',
+            amd: 'ReactRouterDOM',
+            root: 'ReactRouterDOM',
         },
     },
 };
 
-// eslint-disable-next-line no-unused-vars
 // const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 // webpackConfig.plugins.push(new BundleAnalyzerPlugin());
 
