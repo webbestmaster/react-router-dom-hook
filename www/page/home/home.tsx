@@ -1,12 +1,15 @@
+/* eslint-disable no-unused-vars, @typescript-eslint/no-unused-vars */
+
 /* global setTimeout */
 
 import {lazy, Suspense, useEffect, useState} from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import {Locale, useLocale} from '../../provider/locale/locale-context';
 import {Spinner} from '../../layout/spinner/spinner';
+import {useUrl, NavigationLink} from '../../library/library';
 import {ErrorData} from '../../layout/error-data/error-data';
 import {useSystem} from '../../hook/system-hook/system-hook';
-import {NavigationLink} from '../../library/src/navigation-link';
 import {appRoute} from '../../component/app/app-route';
 import {LocaleNameEnum} from '../../provider/locale/locale-context-type';
 import {useFormat} from '../../hook/format-hook/format-hook';
@@ -18,71 +21,26 @@ import homeStyle from './home.scss';
 
 console.log(ErrorData);
 
-const LoadMeAsyncLazy = lazy(
-    () =>
-        import(
-            /* webpackChunkName: 'load-me-async-lazy' */
-            '../../component/load-me-async-lazy/load-me-async-lazy'
-        )
-);
-
 export function Home(): JSX.Element {
-    const {getLocalizedString, setLocaleName, localeName} = useLocale();
-    const {getFormattedNumber} = useFormat();
-    const {screen} = useSystem();
+    // WARNINGS:
+    // 1 - react-router-dom is required
+    // 2 - use inside BrowserRouter -> Switch only
 
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-
-    setTimeout(() => {
-        console.log(isOpen);
-        setIsOpen(false);
-    }, 1e3);
-
-    useEffect(() => {
-        console.log('home');
-    });
-
-    console.log('evaluate home');
+    const {
+        pathname, // string, current path name
+        pushState, // (newPathname: string, queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType) => void
+        pushPathname, // (newPathname: string, options?: UseUrlHookOptionsType) => void
+        queries, // current query map
+        setQuery, // (queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType) => void
+        getQuery, // (key: keyof QueryMap) => string | null
+        deleteQuery, // (key: keyof QueryMap) => void
+    } = useUrl<{queryMapKey: string}>(); // generic is optional, default is ObjectToUrlParametersType
 
     return (
-        <div>
-            <h1 className={homeStyle.home_header}>home page</h1>
-
-            <hr />
-
-            <button
-                data-test-data={getTestNodeData({data: 'some-string'})}
-                data-test-id={getTestNodeId('language-button')}
-                onClick={() =>
-                    setLocaleName(localeName === LocaleNameEnum.enUs ? LocaleNameEnum.ruRu : LocaleNameEnum.enUs)}
-                type="button"
-            >
-                {localeName}
-            </button>
-
-            <hr />
-
-            <NavigationLink to={appRoute.info.path}>to info</NavigationLink>
-
-            <hr />
-
-            <code>{getFormattedNumber(321, {style: 'unit', unit: 'liter', unitDisplay: 'long'})}</code>
-
-            <pre>{JSON.stringify(screen, null, 4)}</pre>
-
-            <Locale stringKey="BUTTON__APPLY" />
-
-            <h4>{getLocalizedString('BUTTON__APPLY')}</h4>
-
-            <img alt="" src={pngImageSrc} />
-
-            <img alt="" src={svgImageSrc} />
-
-            <SvgAsReactComponent />
-
-            <Suspense fallback={<Spinner position="absolute" />}>
-                <LoadMeAsyncLazy smth="home" />
-            </Suspense>
-        </div>
+        <NavigationLink
+            isSaveQueries={false} // string, required, new pathname
+            queries={{youNewQuery: 'it-is-me!'}} // ObjectToUrlParametersType, optional, default is {}, new query map, existed query will be replaced
+            to="new/path" // optional, default is true, save or remove existed query
+        />
     );
 }

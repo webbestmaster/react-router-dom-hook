@@ -56,7 +56,7 @@ export function useUrl<
         [pathname, queries, persistRoute]
     );
 
-    const pushUrl = useCallback(
+    const pushPathname = useCallback(
         (newPathname: string, options?: UseUrlHookOptionsType): void => {
             persistRoute(newPathname, {}, options);
         },
@@ -75,10 +75,10 @@ export function useUrl<
             deleteQuery,
             getQuery,
             pathname,
+            pushPathname,
             pushState,
-            pushUrl,
             queries,
             setQuery,
         };
-    }, [setQuery, getQuery, deleteQuery, pushUrl, pushState, queries, pathname]);
+    }, [setQuery, getQuery, deleteQuery, pushPathname, pushState, queries, pathname]);
 }

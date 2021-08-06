@@ -33,31 +33,31 @@ describe('useUrl', () => {
         render(<NavigationProvider component={DefaultState} />);
     });
 
-    it('pushUrl', () => {
+    it('pushPathname', () => {
         // eslint-disable-next-line react/no-multi-comp
-        function PushUrl(): JSX.Element {
-            const {pushUrl, pushState} = useUrl<Record<string, string>>();
+        function PushPathname(): JSX.Element {
+            const {pushPathname, pushState} = useUrl<Record<string, string>>();
 
             useResetHookState(pushState);
 
             useEffect(() => {
-                pushUrl('/test-push-url');
-            }, [pushUrl]);
+                pushPathname('/test-push-url');
+            }, [pushPathname]);
 
             return <div />;
         }
 
-        const {unmount} = render(<NavigationProvider component={PushUrl} />);
+        const {unmount} = render(<NavigationProvider component={PushPathname} />);
 
         expect(location.pathname).toEqual('/test-push-url');
 
         unmount();
     });
 
-    it('pushUrl: save query', () => {
+    it('pushPathname: save query', () => {
         // eslint-disable-next-line react/no-multi-comp
-        function PushUrlSaveQuery(): JSX.Element {
-            const {setQuery, pushUrl, pushState} = useUrl<Record<string, string>>();
+        function PushPathnameSaveQuery(): JSX.Element {
+            const {setQuery, pushPathname, pushState} = useUrl<Record<string, string>>();
 
             useResetHookState(pushState);
 
@@ -66,13 +66,13 @@ describe('useUrl', () => {
             }, [setQuery]);
 
             useEffect(() => {
-                pushUrl('/test-push-url-save-query');
-            }, [pushUrl]);
+                pushPathname('/test-push-url-save-query');
+            }, [pushPathname]);
 
             return <div />;
         }
 
-        const {unmount} = render(<NavigationProvider component={PushUrlSaveQuery} />);
+        const {unmount} = render(<NavigationProvider component={PushPathnameSaveQuery} />);
 
         expect(location.pathname).toEqual('/test-push-url-save-query');
         expect(location.search).toEqual('?bar=2&foo=1');
@@ -80,10 +80,10 @@ describe('useUrl', () => {
         unmount();
     });
 
-    it('pushUrl: clean query', () => {
+    it('pushPathname: clean query', () => {
         // eslint-disable-next-line react/no-multi-comp
-        function PushUrlCleanQuery(): JSX.Element {
-            const {setQuery, pushUrl, pushState} = useUrl<Record<string, string>>();
+        function PushPathnameCleanQuery(): JSX.Element {
+            const {setQuery, pushPathname, pushState} = useUrl<Record<string, string>>();
 
             useResetHookState(pushState);
 
@@ -92,13 +92,13 @@ describe('useUrl', () => {
             }, [setQuery]);
 
             useEffect(() => {
-                pushUrl('/test-push-url-clean-query', {isSaveQueries: false});
-            }, [pushUrl]);
+                pushPathname('/test-push-url-clean-query', {isSaveQueries: false});
+            }, [pushPathname]);
 
             return <div />;
         }
 
-        const {unmount} = render(<NavigationProvider component={PushUrlCleanQuery} />);
+        const {unmount} = render(<NavigationProvider component={PushPathnameCleanQuery} />);
 
         expect(location.pathname).toEqual('/test-push-url-clean-query');
         expect(location.search).toEqual('');
@@ -108,7 +108,7 @@ describe('useUrl', () => {
 
     it('pushState', () => {
         // eslint-disable-next-line react/no-multi-comp
-        function PushUrlCleanQuery(): JSX.Element {
+        function PushPathnameCleanQuery(): JSX.Element {
             const {pushState} = useUrl<Record<string, string>>();
 
             useResetHookState(pushState);
@@ -120,7 +120,7 @@ describe('useUrl', () => {
             return <div />;
         }
 
-        const {unmount} = render(<NavigationProvider component={PushUrlCleanQuery} />);
+        const {unmount} = render(<NavigationProvider component={PushPathnameCleanQuery} />);
 
         expect(location.pathname).toEqual('/test-push-state');
 
@@ -363,11 +363,11 @@ describe('useUrl', () => {
     it('navigate from page to page', () => {
         // eslint-disable-next-line react/no-multi-comp
         function FirstPage(): JSX.Element {
-            const {pushUrl} = useUrl<Record<string, string>>();
+            const {pushPathname} = useUrl<Record<string, string>>();
 
             useEffect(() => {
-                pushUrl('/second-page');
-            }, [pushUrl]);
+                pushPathname('/second-page');
+            }, [pushPathname]);
 
             return <p>First Page</p>;
         }

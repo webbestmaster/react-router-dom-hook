@@ -1,19 +1,44 @@
-MIT License
+# React Router Dom Hook
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+[![GitHub license](https://img.shields.io/npm/l/react-router-dom-hook)](https://github.com/webbestmaster/react-router-dom-hook/blob/master/license)
+[![npm version](https://img.shields.io/npm/v/react-router-dom-hook.svg?style=flat)](https://www.npmjs.com/package/react-router-dom-hook)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-router-dom-hook)
+<!-- [![GitHub stars](https://img.shields.io/github/stars/webbestmaster/react-router-dom-hook?style=social&maxAge=2592000)](https://github.com/webbestmaster/react-router-dom-hook/) -->
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Several hook to work with react-router-dom. Helpful component (NavigationLink) included!
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+## Install
+
+```bash
+npm i react-router-dom-hook
+```
+
+## Usage
+```typescript jsx
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {useUrl, NavigationLink} from 'react-router-dom-hook';
+
+export function ExampleComponent(): JSX.Element {
+    // WARNINGS:
+    // 1 - react-router-dom is required
+    // 2 - use inside BrowserRouter -> Switch only
+
+    const {
+        pathname, // string, current path name
+        pushState, // (newPathname: string, queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType) => void
+        pushPathname, // (newPathname: string, options?: UseUrlHookOptionsType) => void
+        queries, // current query map
+        setQuery, // (queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType) => void
+        getQuery, // (key: keyof QueryMap) => string | null
+        deleteQuery, // (key: keyof QueryMap) => void
+    } = useUrl<{queryMapKey: string}>(); // generic is optional, default is ObjectToUrlParametersType
+
+    return (
+        <NavigationLink
+            isSaveQueries={false} // string, required, new pathname
+            queries={{youNewQuery: 'it-is-me!'}} // ObjectToUrlParametersType, optional, default is {}, new query map, existed query will be replaced
+            to="new/path" // optional, default is true, save or remove existed query
+        />
+    );
+}
+```
