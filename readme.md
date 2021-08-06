@@ -5,7 +5,7 @@
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-router-dom-hook)
 <!-- [![GitHub stars](https://img.shields.io/github/stars/webbestmaster/react-router-dom-hook?style=social&maxAge=2592000)](https://github.com/webbestmaster/react-router-dom-hook/) -->
 
-Several hook to work with react-router-dom. Helpful component (NavigationLink) included!
+Hook to work with react-router-dom. Helpful component (NavigationLink) included!
 
 ## Install
 
