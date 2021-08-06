@@ -38,9 +38,9 @@ export function Home(): JSX.Element {
 
     return (
         <NavigationLink
-            isSaveQueries={false} // string, required, new pathname
-            queries={{youNewQuery: 'it-is-me!'}} // ObjectToUrlParametersType, optional, default is {}, new query map, existed query will be replaced
-            to="new/path" // optional, default is true, save or remove existed query
+            isSaveQueries={false} // optional, default is true, save or remove existed query
+            queries={{newQuery: 'it-is-me!'}} // ObjectToUrlParametersType, optional, default is {}, new query map, existed query will be replaced
+            to="new/path" // string, required, new pathname
         />
     );
 }
