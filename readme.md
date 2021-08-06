@@ -35,7 +35,7 @@ export function ExampleComponent(): JSX.Element {
 
     return (
         <NavigationLink
-            isSaveQueries={false} // optional, default is true, save or remove existed query
+            isSaveQueries={false} // boolean, optional, default is true, save or remove existed query
             queries={{newQuery: 'it-is-me!'}} // ObjectToUrlParametersType, optional, default is {}, new query map, existed query will be replaced
             to="new/path" // string, required, new pathname
         />
