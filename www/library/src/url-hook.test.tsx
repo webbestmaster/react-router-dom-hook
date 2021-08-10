@@ -403,7 +403,7 @@ describe('useUrl', () => {
     it('replacePathname: clean query', () => {
         // eslint-disable-next-line react/no-multi-comp
         function PushPathnameCleanQuery(): JSX.Element {
-            const {setQuery, pushPathname, pushState, replacePathname} = useUrl<Record<string, string>>();
+            const {setQuery, pushState, replacePathname} = useUrl<Record<string, string>>();
 
             useResetHookState(pushState);
 
@@ -465,7 +465,7 @@ describe('useUrl', () => {
                 replacePathname('/replace-second-page');
             }, [replacePathname]);
 
-            return <p>First Page</p>;
+            return <p>First Page - replace</p>;
         }
 
         // eslint-disable-next-line react/no-multi-comp
@@ -474,7 +474,7 @@ describe('useUrl', () => {
 
             useResetHookState(pushState);
 
-            return <p>Second Page</p>;
+            return <p>Second Page - replace</p>;
         }
 
         // eslint-disable-next-line react/no-multi-comp
@@ -491,7 +491,7 @@ describe('useUrl', () => {
 
         const {unmount} = render(<TwoPageApp />);
 
-        expect(screen.getByText('Second Page')).toBeInTheDocument();
+        expect(screen.getByText('Second Page - replace')).toBeInTheDocument();
 
         unmount();
     });
