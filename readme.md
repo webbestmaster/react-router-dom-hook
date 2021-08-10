@@ -27,6 +27,8 @@ export function ExampleComponent(): JSX.Element {
         pathname, // string, current path name
         pushState, // (newPathname: string, queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType) => void
         pushPathname, // (newPathname: string, options?: UseUrlHookOptionsType) => void
+        replaceState, // (newPathname: string, queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType) => void
+        replacePathname, // (newPathname: string, options?: UseUrlHookOptionsType) => void
         queries, // current query map
         setQuery, // (queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType) => void
         getQuery, // (key: keyof QueryMap) => string | null
