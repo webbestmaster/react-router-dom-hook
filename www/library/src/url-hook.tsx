@@ -18,7 +18,7 @@ export function useUrl<
         return getParametersFromUrl('http://localhost/' + search);
     }, [search]);
 
-    const persistRoute = useCallback(
+    const pushRoute = useCallback(
         (newPathname: string, queriesInner: ObjectToUrlParametersType, options?: UseUrlHookOptionsType): void => {
             const definedOptions = {...urlHookDefaultOptions, ...(options || {})};
 
@@ -29,11 +29,22 @@ export function useUrl<
         [queries, routerHistory]
     );
 
+    const replaceRoute = useCallback(
+        (newPathname: string, queriesInner: ObjectToUrlParametersType, options?: UseUrlHookOptionsType): void => {
+            const definedOptions = {...urlHookDefaultOptions, ...(options || {})};
+
+            const resultQueryMap = definedOptions.isSaveQueries ? {...queries, ...queriesInner} : queriesInner;
+
+            routerHistory.replace({pathname: newPathname, search: objectToUrlParameters(resultQueryMap)});
+        },
+        [queries, routerHistory]
+    );
+
     const setQuery = useCallback(
         (queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType): void => {
-            persistRoute(pathname, queryMap, options);
+            pushRoute(pathname, queryMap, options);
         },
-        [persistRoute, pathname]
+        [pushRoute, pathname]
     );
 
     const getQuery = useCallback(
@@ -51,23 +62,37 @@ export function useUrl<
 
             Reflect.deleteProperty(queriesInner, key);
 
-            persistRoute(pathname, queriesInner, {isSaveQueries: false});
+            pushRoute(pathname, queriesInner, {isSaveQueries: false});
         },
-        [pathname, queries, persistRoute]
+        [pathname, queries, pushRoute]
     );
 
     const pushPathname = useCallback(
         (newPathname: string, options?: UseUrlHookOptionsType): void => {
-            persistRoute(newPathname, {}, options);
+            pushRoute(newPathname, {}, options);
         },
-        [persistRoute]
+        [pushRoute]
     );
 
     const pushState = useCallback(
         (newPathname: string, queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType): void => {
-            persistRoute(newPathname, queryMap, options);
+            pushRoute(newPathname, queryMap, options);
         },
-        [persistRoute]
+        [pushRoute]
+    );
+
+    const replacePathname = useCallback(
+        (newPathname: string, options?: UseUrlHookOptionsType): void => {
+            replaceRoute(newPathname, {}, options);
+        },
+        [replaceRoute]
+    );
+
+    const replaceState = useCallback(
+        (newPathname: string, queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType): void => {
+            replaceRoute(newPathname, queryMap, options);
+        },
+        [replaceRoute]
     );
 
     return useMemo((): UseUrlHookType<QueryMap> => {
@@ -78,7 +103,9 @@ export function useUrl<
             pushPathname,
             pushState,
             queries,
+            replacePathname,
+            replaceState,
             setQuery,
         };
-    }, [setQuery, getQuery, deleteQuery, pushPathname, pushState, queries, pathname]);
+    }, [setQuery, getQuery, deleteQuery, pushPathname, pushState, replacePathname, replaceState, queries, pathname]);
 }

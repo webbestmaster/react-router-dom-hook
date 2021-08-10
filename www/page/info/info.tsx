@@ -12,6 +12,7 @@ import pngImageSrc from '../home/image/marker-icon-2x.png';
 import svgImageSrc, {ReactComponent as SvgAsReactComponent} from '../home/image/questions-with-an-official-answer.svg';
 import homeStyle from '../home/home.scss';
 import {useScreenSize} from '../../hook/system-hook/screen-size-hook';
+import {useUrl} from '../../library/library';
 
 console.log(ErrorData);
 
@@ -27,6 +28,7 @@ export function Info(): JSX.Element {
     const {getLocalizedString} = useLocale();
     const screen = useSystem();
     const screenSize = useScreenSize();
+    const {replaceState, replacePathname} = useUrl();
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -49,6 +51,13 @@ export function Info(): JSX.Element {
 
             <pre>{JSON.stringify(screen, null, 4)}</pre>
             <pre>{JSON.stringify(screenSize, null, 4)}</pre>
+
+            <button onClick={() => replacePathname('/home')} type="button">
+                replace pathname
+            </button>
+            <button onClick={() => replaceState('/info', {query: '11'})} type="button">
+                replace state
+            </button>
 
             <Locale stringKey="BUTTON__APPLY" />
 

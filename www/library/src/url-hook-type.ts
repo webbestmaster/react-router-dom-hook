@@ -23,5 +23,7 @@ export type UseUrlHookType<QueryMap extends ObjectToUrlParametersType = ObjectTo
     pushPathname: (pathname: string, options?: UseUrlHookOptionsType) => void;
     pushState: (pathname: string, queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType) => void;
     queries: Readonly<QueryMapType<keyof QueryMap>>;
+    replacePathname: (pathname: string, options?: UseUrlHookOptionsType) => void;
+    replaceState: (pathname: string, queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType) => void;
     setQuery: (queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType) => void;
 }>;
