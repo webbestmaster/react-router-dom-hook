@@ -399,4 +399,100 @@ describe('useUrl', () => {
 
         unmount();
     });
+
+    it('replacePathname: clean query', () => {
+        // eslint-disable-next-line react/no-multi-comp
+        function PushPathnameCleanQuery(): JSX.Element {
+            const {setQuery, pushPathname, pushState, replacePathname} = useUrl<Record<string, string>>();
+
+            useResetHookState(pushState);
+
+            useEffect(() => {
+                setQuery({mike: '2', nick: '1'});
+            }, [setQuery]);
+
+            useEffect(() => {
+                replacePathname('/replace-test-push-url-clean-query', {isSaveQueries: false});
+            }, [replacePathname]);
+
+            return <div />;
+        }
+
+        const {unmount} = render(<NavigationProvider component={PushPathnameCleanQuery} />);
+
+        expect(location.pathname).toEqual('/replace-test-push-url-clean-query');
+        expect(location.search).toEqual('');
+
+        unmount();
+    });
+
+    it('replace pathname and queries', () => {
+        // eslint-disable-next-line react/no-multi-comp, sonarjs/no-identical-functions
+        function ReplacePathnameAndQueriesPrepare(): JSX.Element {
+            const {replaceState} = useUrl<Record<string, string>>();
+
+            useEffect(() => {
+                replaceState('/replace-some-test-path', {mike: 'bar-query', nick: 'foo-query'});
+            }, [replaceState]);
+
+            return <div />;
+        }
+
+        // eslint-disable-next-line react/no-multi-comp
+        function ReplacePathnameAndQueries(): JSX.Element {
+            const {pathname, queries, pushState} = useUrl<Record<string, string>>();
+
+            useResetHookState(pushState);
+
+            expect(pathname).toEqual('/replace-some-test-path');
+            expect(queries).toEqual({mike: 'bar-query', nick: 'foo-query'});
+
+            return <div />;
+        }
+
+        render(<NavigationProvider component={ReplacePathnameAndQueriesPrepare} />);
+        const {unmount} = render(<NavigationProvider component={ReplacePathnameAndQueries} />);
+
+        unmount();
+    });
+
+    it('replace url', () => {
+        // eslint-disable-next-line react/no-multi-comp
+        function ReplaceUrlFirstPage(): JSX.Element {
+            const {replacePathname} = useUrl<Record<string, string>>();
+
+            useEffect(() => {
+                replacePathname('/replace-second-page');
+            }, [replacePathname]);
+
+            return <p>First Page</p>;
+        }
+
+        // eslint-disable-next-line react/no-multi-comp
+        function ReplaceUrlSecondPage(): JSX.Element {
+            const {pushState} = useUrl<Record<string, string>>();
+
+            useResetHookState(pushState);
+
+            return <p>Second Page</p>;
+        }
+
+        // eslint-disable-next-line react/no-multi-comp
+        function TwoPageApp(): JSX.Element {
+            return (
+                <BrowserRouter>
+                    <Switch>
+                        <Route component={ReplaceUrlFirstPage} exact path="/" />
+                        <Route component={ReplaceUrlSecondPage} exact path="/replace-second-page" />
+                    </Switch>
+                </BrowserRouter>
+            );
+        }
+
+        const {unmount} = render(<TwoPageApp />);
+
+        expect(screen.getByText('Second Page')).toBeInTheDocument();
+
+        unmount();
+    });
 });
