@@ -1,6 +1,6 @@
 export type QueryKeyType = number | string | symbol;
 
-export type QuerySimpleValueType = Date | boolean | number | string | null | void;
+export type QuerySimpleValueType = Date | boolean | number | string | null | undefined | void;
 
 export type QueryValueType = Array<QuerySimpleValueType> | QuerySimpleValueType;
 
@@ -19,7 +19,7 @@ export type UseUrlHookOptionsDefinedType = {
 export type UseUrlHookType<QueryMap extends ObjectToUrlParametersType = ObjectToUrlParametersType> = Readonly<{
     deleteQuery: (key: keyof QueryMap) => void;
     getQuery: (key: keyof QueryMap) => string | null;
-    pathname: Readonly<string>;
+    pathname: string;
     pushPathname: (pathname: string, options?: UseUrlHookOptionsType) => void;
     pushState: (pathname: string, queryMap: Partial<QueryMap>, options?: UseUrlHookOptionsType) => void;
     queries: Readonly<QueryMapType<keyof QueryMap>>;
