@@ -84,7 +84,7 @@ const webpackConfigBuildLibrary = {
     },
 };
 
-const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
-webpackConfig.plugins.push(new BundleAnalyzerPlugin());
+// const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
+// webpackConfig.plugins.push(new BundleAnalyzerPlugin());
 
 module.exports = isBuildLibrary ? webpackConfigBuildLibrary : webpackConfig;
