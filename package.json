@@ -1,6 +1,6 @@
 {
   "name": "react-router-dom-hook",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/library.d.ts",
@@ -40,7 +40,7 @@
     "test:unit": "jest --config='test-unit/config/jest.config.js' ./www/ --coverage",
     "pre-commit-hook": "npm run check"
   },
-  "peerDependencies": {
+  "optionalDependencies": {
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
     "@types/react-router": "^5.1.16",
