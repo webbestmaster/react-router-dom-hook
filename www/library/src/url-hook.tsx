@@ -20,7 +20,7 @@ export function useUrl<
 
     const pushRoute = useCallback(
         (newPathname: string, queriesInner: ObjectToUrlParametersType, options?: UseUrlHookOptionsType): void => {
-            const definedOptions = {...urlHookDefaultOptions, ...(options || {})};
+            const definedOptions = {...urlHookDefaultOptions, ...options};
 
             const resultQueryMap = definedOptions.isSaveQueries ? {...queries, ...queriesInner} : queriesInner;
 
@@ -31,7 +31,7 @@ export function useUrl<
 
     const replaceRoute = useCallback(
         (newPathname: string, queriesInner: ObjectToUrlParametersType, options?: UseUrlHookOptionsType): void => {
-            const definedOptions = {...urlHookDefaultOptions, ...(options || {})};
+            const definedOptions = {...urlHookDefaultOptions, ...options};
 
             const resultQueryMap = definedOptions.isSaveQueries ? {...queries, ...queriesInner} : queriesInner;
 
