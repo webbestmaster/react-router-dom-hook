@@ -21,6 +21,8 @@ export type NavigationLinkPropsType<QueryMap> = {
 export function NavigationLink<QueryMap extends ObjectToUrlParametersType = ObjectToUrlParametersType>(
     props: NavigationLinkPropsType<QueryMap>
 ): JSX.Element {
+    // INFO: react/prop-types - is not work with generics types
+    // eslint-disable-next-line react/prop-types
     const {className, to, children, isSaveQueries = true, title, queries: passedQueries = {}} = props;
 
     const {queries: currentQueries} = useUrl<QueryMap>();
