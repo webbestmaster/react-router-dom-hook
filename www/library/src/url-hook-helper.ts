@@ -49,9 +49,8 @@ export function objectToUrlParameters(options: ObjectToUrlParametersType): strin
                 .map<string | null>((simpleValue: QuerySimpleValueType): string | null =>
                     stringifyUrlParameterSimpleValue(simpleValue)
                 )
-                .filter<string>((stringValueInner: string | null): stringValueInner is string =>
-                    Boolean(stringValueInner)
-                );
+                .filter(Boolean)
+                .map<string>(String);
 
             if (stringList.length > 0) {
                 parameterList.push(encodeURIComponent(key) + '=' + encodeURIComponent(stringList.join(',')));
